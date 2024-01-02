@@ -1,11 +1,19 @@
 apiVersion: v1 # Descriptor conforms to version v1 of Kubernetes API
-kind: Pod # Select Pod resource
+kind: ReplicationController # Descriptor is for a ReplicationController
 metadata:
   name: hello-kube # The name of the pod
 spec:
-  containers:
-    - image: nguyenhiep23/actix-k8s # Image to create the container
-      name: hello-kube # The name of the container
-      ports:
-        - containerPort: 8080 # The port the app is listening on
-          protocol: TCP
+  replicas: 3 # The number of replicas to create
+  selector:
+    app: be # The label of the pod
+  template: # The pod template
+    metadata:
+      labels:
+        app: be # The label of the pod
+    spec:
+      containers:
+        - image: nguyenhiep23/actix-k8s # Image to create the container
+          name: hello-kube # The name of the container
+          ports:
+            - containerPort: 8080 # The port the app is listening on
+              protocol: TCP

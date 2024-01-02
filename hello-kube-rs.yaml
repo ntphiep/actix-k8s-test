@@ -1,0 +1,19 @@
+apiVersion: apps/v1 # change version API
+kind: ReplicaSet # change resource name
+metadata:
+  name: hello-rs
+spec:
+  replicas: 3
+  selector:
+    matchLabels: # change here
+      app: hello-kube
+  template:
+    metadata:
+      labels:
+        app: hello-kube
+    spec:
+      containers:
+      - image: nguyenhiep23/actix-k8s
+        name: hello-kube
+        ports:
+          - containerPort: 8080
